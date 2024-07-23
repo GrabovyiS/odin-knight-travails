@@ -113,10 +113,12 @@ function knightMoves(startCoords, targetCoords) {
     return;
   }
 
-  console.log(`You made it in ${movesStack.length} moves! Here's your path:`);
+  console.log(`\nYou made it in ${movesStack.length} moves! Here's your path:`);
   while (movesStack.length > 0) {
     console.log(movesStack.pop());
   }
+  console.log('\n');
 }
 
-knightMoves([13, 3], [9, 9]);
+knightMoves([3, 3], [0, 0]);
+knightMoves([0, 0], [7, 7]);
