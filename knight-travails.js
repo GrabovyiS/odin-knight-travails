@@ -49,6 +49,8 @@ class KnightTravails {
       const coordsStack = this.searchForMove(targetCoords, node, stack);
       if (coordsStack) {
         console.log('gets up from', node.coords, 'to', currentRoot.coords);
+        // We collect the stack as we go backwards in our function call stack
+        // This way the root node is the first one in the stack
         coordsStack.push(currentRoot.coords);
         return coordsStack;
       }
