@@ -19,7 +19,7 @@ class KnightTravails {
 
   constructor(rootCoords) {
     this.root = new Node(rootCoords);
-    this.buildGraph(3);
+    this.buildGraph(6);
   }
 
   buildGraph(n, currentRoot = this.root) {
@@ -56,9 +56,8 @@ class KnightTravails {
       }
     }
 
-    if (stack.length === 0) {
-      return false;
-    }
+    // If the call stack is empty - we are back at the root node without getting an answer
+    return false;
   }
 }
 
@@ -90,10 +89,17 @@ function knightMoves(startCoords, targetCoords) {
 
   const movesStack = knightTravails.searchForMove(targetCoords);
 
+  if (!movesStack) {
+    console.log(
+      'Something went wrong. Your target coordinates might have been illegal.'
+    );
+    return;
+  }
+
   console.log(`You made it in ${movesStack.length} moves! Here's your path:`);
   while (movesStack.length > 0) {
     console.log(movesStack.pop());
   }
 }
 
-knightMoves([3, 3], [4, 3]);
+knightMoves([3, 3], [9, 9]);
