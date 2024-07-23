@@ -19,7 +19,7 @@ class KnightTravails {
 
   constructor(rootCoords) {
     this.root = new Node(rootCoords);
-    this.buildGraph(1);
+    this.buildGraph(3);
   }
 
   buildGraph(n, currentRoot = this.root) {
@@ -35,9 +35,30 @@ class KnightTravails {
       this.buildGraph(n - 1, newNode);
     });
   }
-}
 
-function knightMoves(coords) {}
+  searchForMove(targetCoords, currentRoot = this.root, stack = []) {
+    if (
+      currentRoot.coords[0] === targetCoords[0] &&
+      currentRoot.coords[1] === targetCoords[1]
+    ) {
+      console.log(currentRoot.coords, 'Returns');
+      return [currentRoot.coords];
+    }
+
+    for (const node of currentRoot.possibleMoves) {
+      const coordsStack = this.searchForMove(targetCoords, node, stack);
+      if (coordsStack) {
+        console.log('gets up from', node.coords, 'to', currentRoot.coords);
+        coordsStack.push(currentRoot.coords);
+        return coordsStack;
+      }
+    }
+
+    if (stack.length === 0) {
+      return false;
+    }
+  }
+}
 
 function getPossibleMoves(coords) {
   const moves = [];
@@ -62,7 +83,15 @@ function getPossibleMoves(coords) {
   return moves;
 }
 
-console.log(getPossibleMoves([0, 0]));
-let knightTravails = new KnightTravails([0, 0]);
-console.log(knightTravails.root);
-console.log(knightTravails.root.possibleMoves);
+function knightMoves(startCoords, targetCoords) {
+  const knightTravails = new KnightTravails(startCoords);
+
+  const movesStack = knightTravails.searchForMove(targetCoords);
+
+  console.log(`You made it in ${movesStack.length} moves! Here's your path:`);
+  while (movesStack.length > 0) {
+    console.log(movesStack.pop());
+  }
+}
+
+knightMoves([3, 3], [4, 3]);
